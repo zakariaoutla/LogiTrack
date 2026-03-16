@@ -21,4 +21,8 @@ public class CommandeService {
     public Commande getByid(long id){
         return commandeRepository.findById(id).orElse(null);
     }
+
+    public Commande save(Commande commande){
+        return commandeRepository.save(commande);
+    }
 }
