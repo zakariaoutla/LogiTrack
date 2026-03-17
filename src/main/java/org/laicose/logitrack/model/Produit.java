@@ -18,8 +18,10 @@ public class Produit {
     private long id;
     private String nom;
     private String categorie;
-    private String prix;
-    private String quantiteStock;
+    private double prix;
+
+    @Column(name = "quantite")
+    private int quantiteStock;
 
     @OneToMany(mappedBy = "produit")
     private List<LigneCommande> ligneCommandes;
