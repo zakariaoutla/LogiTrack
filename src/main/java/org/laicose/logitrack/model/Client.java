@@ -1,6 +1,7 @@
 package org.laicose.logitrack.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ public class Client {
     private String telephone;
     private String ville;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Commande> commandes;
 
