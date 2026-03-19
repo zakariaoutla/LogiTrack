@@ -35,8 +35,8 @@ public class CommandeController {
     }
 
     @PostMapping
-    public Commande creeCommende(@RequestParam  long clientId){
-        return commandeService.creeCommende(clientId);
+    public Commande creeCommende(@RequestParam  long clientId, @RequestParam long produitId){
+        return commandeService.creeCommende(clientId, produitId);
     }
 
     @PutMapping("{id}")

@@ -3,8 +3,10 @@ package org.laicose.logitrack.service;
 
 import org.laicose.logitrack.model.Client;
 import org.laicose.logitrack.model.Commande;
+import org.laicose.logitrack.model.Produit;
 import org.laicose.logitrack.repository.ClientRepository;
 import org.laicose.logitrack.repository.CommandeRepository;
+import org.laicose.logitrack.repository.ProduitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,11 +23,16 @@ public class CommandeService {
     @Autowired
     private ClientRepository clientRepository;
 
+    @Autowired
+    private ProduitRepository produitRepository;
+
     @Transactional
-    public Commande creeCommende(long id){
+    public Commande creeCommende(long id, long produitId){
         Client client = clientRepository.findById(id).orElse(null);
+        Produit produit = produitRepository.findById(id).orElse(null);
         Commande commande = new Commande();
         commande.setClient(client);
+        
         commande.setDateCommande(LocalDate.now());
         commande.setStatut("EN_ATTENTE");
         return commandeRepository.save(commande);

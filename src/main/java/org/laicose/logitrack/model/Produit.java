@@ -25,4 +25,9 @@ public class Produit {
 
     @OneToMany(mappedBy = "produit")
     private List<LigneCommande> ligneCommandes;
+
+    public int getQuantiteStock(int i) {
+
+        return i;
+    }
 }
