@@ -1,6 +1,8 @@
 package org.laicose.logitrack.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,11 +25,8 @@ public class Produit {
     @Column(name = "quantite")
     private int quantiteStock;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "produit")
     private List<LigneCommande> ligneCommandes;
 
-    public int getQuantiteStock(int i) {
-
-        return i;
-    }
 }

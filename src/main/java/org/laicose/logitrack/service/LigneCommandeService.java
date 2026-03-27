@@ -9,6 +9,7 @@ import org.laicose.logitrack.repository.LigneCommandeRepository;
 import org.laicose.logitrack.repository.ProduitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class LigneCommandeService {
    @Autowired
     CommandeRepository commandeRepository;
 
+    @Transactional
     public LigneCommande ajouteUnProduit(long commandeId, long productId, int quantite){
         Commande commande = commandeRepository.findById(commandeId).orElse(null);
 
@@ -37,7 +39,7 @@ public class LigneCommandeService {
         ligneCommande.setProduit(produit);
         ligneCommande.setQuantite(quantite);
 
-        produit.getQuantiteStock(produit.getQuantiteStock()- quantite);
+        produit.setQuantiteStock(produit.getQuantiteStock()- quantite);
 
         produitRepository.save(produit);
 

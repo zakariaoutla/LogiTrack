@@ -27,9 +27,8 @@ public class CommandeService {
     private ProduitRepository produitRepository;
 
     @Transactional
-    public Commande creeCommende(long id, long produitId){
-        Client client = clientRepository.findById(id).orElse(null);
-        Produit produit = produitRepository.findById(id).orElse(null);
+    public Commande creeCommende(long clientId){
+        Client client = clientRepository.findById(clientId).orElse(null);
         Commande commande = new Commande();
         commande.setClient(client);
         

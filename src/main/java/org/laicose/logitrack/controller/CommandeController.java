@@ -24,7 +24,8 @@ public class CommandeController {
     public Commande getById(@PathVariable long id){
         return commandeService.getByid(id);
     }
-    @GetMapping("/totalcommand/{id}")
+
+    @GetMapping("/client/{id}")
         public List<Commande>  getClientById(@PathVariable long id){
          return commandeService.findClientById(id);
         }
@@ -35,12 +36,12 @@ public class CommandeController {
     }
 
     @PostMapping
-    public Commande creeCommende(@RequestParam  long clientId, @RequestParam long produitId){
-        return commandeService.creeCommende(clientId, produitId);
+    public Commande creeCommende(@RequestParam  long clientId){
+        return commandeService.creeCommende(clientId);
     }
 
-    @PutMapping("{id}")
-    public Commande update(@PathVariable long id, @RequestBody String newStatut){
+    @PutMapping("{id}/status")
+    public Commande update(@PathVariable long id, @RequestParam String newStatut){
         return commandeService.update(id, newStatut);
     }
 

@@ -29,4 +29,20 @@ public class ProduitService {
     public void delete(long id){
         produitRepository.deleteById(id);
     }
+
+    public List<Produit> findByCategorie(String categorie) {
+        return produitRepository.findByCategorie(categorie);
+    }
+
+    public List<Produit> findByPrixLessThan(double prix) {
+        return produitRepository.findByPrixLessThan(prix);
+    }
+
+    public List<Produit> findLowStock() {
+        return produitRepository.findLowStockProduits();
+    }
+
+    public Produit findTopProduit() {
+        return produitRepository.findTopProduit();
+    }
 }

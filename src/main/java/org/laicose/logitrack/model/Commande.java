@@ -1,6 +1,7 @@
 package org.laicose.logitrack.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class Commande {
     private LocalDate dateCommande;
     private String statut;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "commande")
     private List<LigneCommande> ligneCommandes;
 

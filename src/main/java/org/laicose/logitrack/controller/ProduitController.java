@@ -35,4 +35,24 @@ public class ProduitController {
     public void delete(@PathVariable long id){
         produitService.delete(id);
     }
+
+    @GetMapping("/category/{category}")
+    public List<Produit> getByCategorie(@PathVariable String category) {
+        return produitService.findByCategorie(category);
+    }
+
+    @GetMapping("/price/{prix}")
+    public List<Produit> getByPrixLessThan(@PathVariable double prix) {
+        return produitService.findByPrixLessThan(prix);
+    }
+
+    @GetMapping("/low-stock")
+    public List<Produit> getLowStock() {
+        return produitService.findLowStock();
+    }
+
+    @GetMapping("/statistics/top-produit")
+    public Produit getTopProduit(){
+        return produitService.findTopProduit();
+    }
 }
