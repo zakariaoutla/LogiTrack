@@ -46,7 +46,7 @@ public class CommandeService {
     }
 
     public List<Commande> findClientById(long clientId){
-        return commandeRepository.findClientById(clientId);
+        return commandeRepository.findByClientId(clientId);
     }
 
     public long countTotalCommend(){
