@@ -9,6 +9,7 @@ import org.laicose.logitrack.service.LigneCommandeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +20,7 @@ public class LigneCommandeController {
     private final LigneCommandeService ligneCommandeService;
 
     @PostMapping("/{orderId}/products")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<LigneCommandeResDto> ajouteCommande(
             @PathVariable long orderId,
             @Valid @RequestBody LigneCommandeReqDto request) {
@@ -30,6 +32,7 @@ public class LigneCommandeController {
     }
 
     @DeleteMapping("/products/{ligneId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteLigne(@PathVariable long ligneId) {
         ligneCommandeService.deleteLigne(ligneId);
         return ResponseEntity.noContent().build();
