@@ -18,4 +18,7 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
     @Query("SELECT p FROM Produit p JOIN p.ligneCommandes lc GROUP BY p ORDER BY SUM(lc.quantite) DESC LIMIT 1")
     Produit findTopProduit();
 
+    @Query("select p FROM Produit p WHERE p.nom = :nom ")
+    Produit findByNom(String nom);
+
 }

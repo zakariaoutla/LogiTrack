@@ -2,6 +2,7 @@ package org.laicose.logitrack.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name = "ligne_commande")
 public class LigneCommande {
 
     @Id
@@ -19,10 +21,11 @@ public class LigneCommande {
     private int quantite;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "produit_id")
     private Produit produit;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "commande_id")
     private Commande commande;

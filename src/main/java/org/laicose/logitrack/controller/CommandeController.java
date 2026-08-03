@@ -1,49 +1,56 @@
 package org.laicose.logitrack.controller;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.laicose.logitrack.Enum.CommandeStatut;
+import org.laicose.logitrack.dto.request.CommandeReqDto;
+import org.laicose.logitrack.dto.response.CommandeResDto;
 import org.laicose.logitrack.model.Commande;
 import org.laicose.logitrack.service.CommandeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/commande")
 public class CommandeController {
 
-    @Autowired
-    private CommandeService commandeService;
+    private final CommandeService commandeService;
 
 
     @GetMapping
-    public List<Commande> getAll(){
-        return commandeService.getAllCommande();
+    public ResponseEntity<List<CommandeResDto>> getAll() {
+        return ResponseEntity.ok(commandeService.getAllCommandes());
     }
 
-    @GetMapping("{id}")
-    public Commande getById(@PathVariable long id){
-        return commandeService.getByid(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<CommandeResDto> getById(@PathVariable long id) {
+        return ResponseEntity.ok(commandeService.getById(id));
     }
 
     @GetMapping("/client/{id}")
-        public List<Commande>  getClientById(@PathVariable long id){
-         return commandeService.findClientById(id);
-        }
+    public ResponseEntity<List<CommandeResDto>> getClientById(@PathVariable long id) {
+        return ResponseEntity.ok(commandeService.getCommandesByClientId(id));
+    }
 
     @GetMapping("/count")
-    public long getCountTotalCommend(){
-        return commandeService.countTotalCommend();
+    public ResponseEntity<Long> getCountTotalCommandes() {
+        return ResponseEntity.ok(commandeService.countTotalCommandes());
     }
 
     @PostMapping
-    public Commande creeCommende(@RequestParam  long clientId){
-        return commandeService.creeCommende(clientId);
+    public ResponseEntity<CommandeResDto> creeCommande(@Valid @RequestBody CommandeReqDto request) {
+        CommandeResDto savedCommande = commandeService.creeCommande(request);
+        return new ResponseEntity<>(savedCommande, HttpStatus.CREATED);
     }
 
-    @PutMapping("{id}/status")
-    public Commande update(@PathVariable long id, @RequestParam String newStatut){
-        return commandeService.update(id, newStatut);
+    @PutMapping("/{id}/status")
+    public ResponseEntity<CommandeResDto> updateStatut(@PathVariable long id, @RequestParam CommandeStatut newStatut) {
+        return ResponseEntity.ok(commandeService.updateStatut(id, newStatut));
     }
-
 
 }

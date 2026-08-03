@@ -1,6 +1,11 @@
 package org.laicose.logitrack.service;
 
 
+import lombok.RequiredArgsConstructor;
+import org.laicose.logitrack.Enum.CommandeStatut;
+import org.laicose.logitrack.dto.request.CommandeReqDto;
+import org.laicose.logitrack.dto.response.CommandeResDto;
+import org.laicose.logitrack.mapper.CommandeMapper;
 import org.laicose.logitrack.model.Client;
 import org.laicose.logitrack.model.Commande;
 import org.laicose.logitrack.model.Produit;
@@ -15,48 +20,56 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CommandeService {
 
-    @Autowired
-    private CommandeRepository commandeRepository;
-
-    @Autowired
-    private ClientRepository clientRepository;
-
-    @Autowired
-    private ProduitRepository produitRepository;
+    private final CommandeRepository commandeRepository;
+    private final ClientRepository clientRepository;
+    private final CommandeMapper commandeMapper;
 
     @Transactional
-    public Commande creeCommende(long clientId){
-        Client client = clientRepository.findById(clientId).orElse(null);
-        Commande commande = new Commande();
+    public CommandeResDto creeCommande(CommandeReqDto request) {
+        Client client = clientRepository.findById(request.getClientId())
+                .orElseThrow(() -> new RuntimeException("Client avec l'ID " + request.getClientId() + " est introuvable"));
+
+        Commande commande = commandeMapper.toEntity(request);
         commande.setClient(client);
-        
-        commande.setDateCommande(LocalDate.now());
-        commande.setStatut("EN_ATTENTE");
-        return commandeRepository.save(commande);
+
+        if (commande.getDateCommande() == null) {
+            commande.setDateCommande(LocalDate.now());
+        }
+
+        Commande savedCommande = commandeRepository.save(commande);
+        return commandeMapper.toResponse(savedCommande);
     }
 
-    public List<Commande> getAllCommande(){
-        return commandeRepository.findAll();
+    public List<CommandeResDto> getAllCommandes() {
+        List<Commande> commandes = commandeRepository.findAll();
+        return commandeMapper.toListDto(commandes);
     }
 
-    public Commande getByid(long id){
-        return commandeRepository.findById(id).orElse(null);
+    public CommandeResDto getById(long id) {
+        Commande commande = commandeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Commande avec l'ID " + id + " est introuvable"));
+        return commandeMapper.toResponse(commande);
     }
 
-    public List<Commande> findClientById(long clientId){
-        return commandeRepository.findByClientId(clientId);
+    public List<CommandeResDto> getCommandesByClientId(long clientId) {
+        List<Commande> commandes = commandeRepository.findByClientId(clientId);
+        return commandeMapper.toListDto(commandes);
     }
 
-    public long countTotalCommend(){
-        return commandeRepository.totalCommend();
+    public long countTotalCommandes() {
+        return commandeRepository.count();
     }
+    public CommandeResDto updateStatut(long id, CommandeStatut newStatut) {
+        Commande commande = commandeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Commande avec l'ID " + id + " est introuvable"));
 
-    public Commande update(long id, String newStatut){
-        Commande commande = getByid(id);
-        commande.setStatut(newStatut);
-        return commandeRepository.save(commande);
+        commande.setCommandeStatut(newStatut);
+        Commande updatedCommande = commandeRepository.save(commande);
+
+        return commandeMapper.toResponse(updatedCommande);
     }
 
 
