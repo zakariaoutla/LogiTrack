@@ -3,6 +3,7 @@ package org.laicose.logitrack.configuration;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.laicose.logitrack.model.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -23,8 +24,12 @@ public class JwtUtil {
     }
 
     public String generateToken(UserDetails userDetails){
+        User user = (User) userDetails;
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
+                .claim("nom", user.getNom())
+                .claim("prenom", user.getPrenom())
+                .claim("role", user.getRoleUser())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis()+ expiration))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)

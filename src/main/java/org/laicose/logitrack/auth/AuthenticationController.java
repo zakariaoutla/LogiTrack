@@ -59,11 +59,14 @@ public class AuthenticationController {
     public ResponseEntity<?> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
 
         User user = userRepository.findByEmail(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("invalid username"));
+                .orElseThrow(() -> new RuntimeException("invalid Email"));
 
         return ResponseEntity.ok(Map.of(
                 "id", user.getId(),
-                "email", user.getEmail()
+                "email", user.getEmail(),
+                "role",user.getRoleUser(),
+                "nom",user.getNom(),
+                "prenom",user.getPrenom()
         ));
     }
 
