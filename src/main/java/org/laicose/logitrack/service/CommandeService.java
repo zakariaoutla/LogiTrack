@@ -62,6 +62,7 @@ public class CommandeService {
     public long countTotalCommandes() {
         return commandeRepository.count();
     }
+
     public CommandeResDto updateStatut(long id, CommandeStatut newStatut) {
         Commande commande = commandeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Commande avec l'ID " + id + " est introuvable"));

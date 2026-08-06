@@ -83,4 +83,8 @@ public class ProduitService {
         }
         return produitMapper.toResponse(produit);
     }
+
+    public Long getCountProduit(){
+        return produitRepository.count();
+    }
 }

@@ -41,7 +41,7 @@ public class CommandeController {
         return ResponseEntity.ok(commandeService.getCommandesByClientId(id));
     }
 
-    @GetMapping("/count")
+    @GetMapping("/total-commande")
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<Long> getCountTotalCommandes() {
         return ResponseEntity.ok(commandeService.countTotalCommandes());

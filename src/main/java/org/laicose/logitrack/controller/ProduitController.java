@@ -83,4 +83,10 @@ public class ProduitController {
     public ResponseEntity<ProduitResDto> getByNom(@RequestParam String nom) {
         return ResponseEntity.ok(produitService.findByNom(nom));
     }
+
+    @GetMapping("/total-produit")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
+    public ResponseEntity<Long> getCountProduit(){
+        return ResponseEntity.ok(produitService.getCountProduit());
+    }
 }

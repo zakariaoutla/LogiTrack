@@ -54,4 +54,8 @@ public class ClientService {
         }
         clientRepository.deleteById(id);
     }
+
+    public long getTotalClient(){
+        return clientRepository.count();
+    }
 }

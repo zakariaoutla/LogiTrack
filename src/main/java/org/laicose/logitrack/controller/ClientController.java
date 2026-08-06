@@ -52,4 +52,11 @@ public class ClientController {
         clientService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/total-clients")
+    @PreAuthorize("hasAnyRole('ADMIN'.'MANAGER')")
+    public ResponseEntity<Long> getTotalClients(){
+        return ResponseEntity.ok(clientService.getTotalClient());
+    }
+
 }
