@@ -8,6 +8,8 @@ import org.laicose.logitrack.mapper.ClientMapper;
 import org.laicose.logitrack.model.Client;
 import org.laicose.logitrack.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,9 +21,9 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private final ClientMapper clientMapper;
 
-    public List<ClientResDto> getAllClients() {
-        List<Client> clients = clientRepository.findAll();
-        return clientMapper.toDtoList(clients);
+    public Page<ClientResDto> getAllClients(Pageable pageable) {
+        Page<Client> clients = clientRepository.findAll(pageable);
+        return clients.map(clientMapper::toResponseDto);
     }
 
     public ClientResDto getById(long id) {
