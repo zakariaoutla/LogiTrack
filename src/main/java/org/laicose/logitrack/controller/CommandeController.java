@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.laicose.logitrack.Enum.CommandeStatut;
 import org.laicose.logitrack.dto.request.CommandeReqDto;
 import org.laicose.logitrack.dto.response.CommandeResDto;
+import org.laicose.logitrack.dto.response.OrderStatusStatsDto;
 import org.laicose.logitrack.model.Commande;
 import org.laicose.logitrack.service.CommandeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,12 @@ public class CommandeController {
     public ResponseEntity<Long> getCommandeClient(@PathVariable long id){
         return ResponseEntity.ok(commandeService.getTotalCommandeClient(id));
 
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','AGENT')")
+    @GetMapping("/count-status")
+     public ResponseEntity<OrderStatusStatsDto> getCountByStatus(){
+        return ResponseEntity.ok(commandeService.countByStatus());
     }
 
 }

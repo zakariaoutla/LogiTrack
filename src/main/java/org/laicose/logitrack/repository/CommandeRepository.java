@@ -1,6 +1,7 @@
 package org.laicose.logitrack.repository;
 
 import io.lettuce.core.dynamic.annotation.Param;
+import org.laicose.logitrack.Enum.CommandeStatut;
 import org.laicose.logitrack.model.Client;
 import org.laicose.logitrack.model.Commande;
 import org.springframework.data.domain.Page;
@@ -17,4 +18,7 @@ public interface CommandeRepository extends JpaRepository<Commande, Long> {
 
     @Query("SELECT count(0) from Commande")
     long totalCommend();
+
+    long countByCommandeStatut(CommandeStatut statut);
+
 }

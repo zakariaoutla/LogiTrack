@@ -89,4 +89,5 @@ public class ProduitService {
     public Long getCountProduit(){
         return produitRepository.count();
     }
+
 }

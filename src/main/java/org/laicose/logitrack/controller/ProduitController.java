@@ -1,5 +1,6 @@
 package org.laicose.logitrack.controller;
 
+import io.lettuce.core.dynamic.annotation.Param;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.laicose.logitrack.dto.request.ProduitReqDto;
@@ -93,4 +94,6 @@ public class ProduitController {
     public ResponseEntity<Long> getCountProduit(){
         return ResponseEntity.ok(produitService.getCountProduit());
     }
+
+
 }

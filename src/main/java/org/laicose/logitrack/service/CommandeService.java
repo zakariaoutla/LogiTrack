@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.laicose.logitrack.Enum.CommandeStatut;
 import org.laicose.logitrack.dto.request.CommandeReqDto;
 import org.laicose.logitrack.dto.response.CommandeResDto;
+import org.laicose.logitrack.dto.response.OrderStatusStatsDto;
 import org.laicose.logitrack.mapper.CommandeMapper;
 import org.laicose.logitrack.model.Client;
 import org.laicose.logitrack.model.Commande;
@@ -73,6 +74,14 @@ public class CommandeService {
 
     public long getTotalCommandeClient(long id){
         return commandeRepository.totalCommandeClient(id);
+    }
+
+    public OrderStatusStatsDto countByStatus(){
+        long enAttente = commandeRepository.countByCommandeStatut(CommandeStatut.EN_ATTENTE);
+        long expediees = commandeRepository.countByCommandeStatut(CommandeStatut.EXPEDIEE);
+        long livrees = commandeRepository.countByCommandeStatut(CommandeStatut.LIVREE);
+        OrderStatusStatsDto status = new OrderStatusStatsDto(enAttente, expediees, livrees);
+        return status;
     }
 
 
