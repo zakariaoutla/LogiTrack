@@ -26,7 +26,7 @@ public class Produit {
     private int quantiteStock;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "produit")
+    @OneToMany(mappedBy = "produit",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LigneCommande> ligneCommandes;
 
 }

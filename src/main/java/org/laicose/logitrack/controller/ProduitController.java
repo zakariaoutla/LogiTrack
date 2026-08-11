@@ -4,6 +4,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.laicose.logitrack.dto.request.ProduitReqDto;
 import org.laicose.logitrack.dto.response.ProduitResDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,8 +29,8 @@ public class ProduitController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER','AGENT')")
-    public ResponseEntity<List<ProduitResDto>> getAll() {
-        return ResponseEntity.ok(produitService.getAllProduits());
+    public ResponseEntity<Page<ProduitResDto>> getAll(@PageableDefault(page = 0,size = 10,direction = Sort.Direction.ASC) Pageable pageable) {
+        return ResponseEntity.ok(produitService.getAllProduits(pageable));
     }
 
     @GetMapping("/{id}")

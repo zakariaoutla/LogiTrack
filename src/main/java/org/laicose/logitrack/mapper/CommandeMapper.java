@@ -18,5 +18,6 @@ public interface CommandeMapper {
     List<CommandeResDto> toListDto(List<Commande> commandes);
 
     @Mapping(source = "client.id", target = "clientId")
+    @Mapping(source = "client.nom", target = "clientNom")
     CommandeResDto toResponse(Commande commande);
 }

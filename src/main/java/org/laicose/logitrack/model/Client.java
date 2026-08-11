@@ -24,7 +24,7 @@ public class Client {
     private String ville;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Commande> commandes;
 
 

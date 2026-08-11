@@ -7,12 +7,10 @@ import org.laicose.logitrack.dto.response.ClientResDto;
 import org.laicose.logitrack.mapper.ClientMapper;
 import org.laicose.logitrack.model.Client;
 import org.laicose.logitrack.repository.ClientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

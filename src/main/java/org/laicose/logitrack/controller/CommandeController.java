@@ -8,6 +8,10 @@ import org.laicose.logitrack.dto.response.CommandeResDto;
 import org.laicose.logitrack.model.Commande;
 import org.laicose.logitrack.service.CommandeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,20 +29,14 @@ public class CommandeController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER','AGENT')")
-    public ResponseEntity<List<CommandeResDto>> getAll() {
-        return ResponseEntity.ok(commandeService.getAllCommandes());
+    public ResponseEntity<Page<CommandeResDto>> getAll(@PageableDefault(page = 0,size=10, direction = Sort.Direction.ASC) Pageable pageable) {
+        return ResponseEntity.ok(commandeService.getAllCommandes(pageable));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<CommandeResDto> getById(@PathVariable long id) {
         return ResponseEntity.ok(commandeService.getById(id));
-    }
-
-    @GetMapping("/client/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
-    public ResponseEntity<List<CommandeResDto>> getClientById(@PathVariable long id) {
-        return ResponseEntity.ok(commandeService.getCommandesByClientId(id));
     }
 
     @GetMapping("/total-commande")
@@ -58,6 +56,13 @@ public class CommandeController {
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER','AGENT')")
     public ResponseEntity<CommandeResDto> updateStatut(@PathVariable long id, @RequestParam CommandeStatut newStatut) {
         return ResponseEntity.ok(commandeService.updateStatut(id, newStatut));
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','AGENT')")
+    @GetMapping("/total-commande-client/{id}")
+    public ResponseEntity<Long> getCommandeClient(@PathVariable long id){
+        return ResponseEntity.ok(commandeService.getTotalCommandeClient(id));
+
     }
 
 }

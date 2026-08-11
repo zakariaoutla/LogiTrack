@@ -13,6 +13,8 @@ import org.laicose.logitrack.repository.ClientRepository;
 import org.laicose.logitrack.repository.CommandeRepository;
 import org.laicose.logitrack.repository.ProduitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,20 +45,15 @@ public class CommandeService {
         return commandeMapper.toResponse(savedCommande);
     }
 
-    public List<CommandeResDto> getAllCommandes() {
-        List<Commande> commandes = commandeRepository.findAll();
-        return commandeMapper.toListDto(commandes);
+    public Page<CommandeResDto> getAllCommandes(Pageable pageable) {
+        Page<Commande> commandes = commandeRepository.findAll(pageable);
+        return commandes.map(commandeMapper::toResponse);
     }
 
     public CommandeResDto getById(long id) {
         Commande commande = commandeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Commande avec l'ID " + id + " est introuvable"));
         return commandeMapper.toResponse(commande);
-    }
-
-    public List<CommandeResDto> getCommandesByClientId(long clientId) {
-        List<Commande> commandes = commandeRepository.findByClientId(clientId);
-        return commandeMapper.toListDto(commandes);
     }
 
     public long countTotalCommandes() {
@@ -71,6 +68,11 @@ public class CommandeService {
         Commande updatedCommande = commandeRepository.save(commande);
 
         return commandeMapper.toResponse(updatedCommande);
+    }
+
+
+    public long getTotalCommandeClient(long id){
+        return commandeRepository.totalCommandeClient(id);
     }
 
 

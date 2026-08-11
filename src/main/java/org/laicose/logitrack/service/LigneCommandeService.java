@@ -12,6 +12,8 @@ import org.laicose.logitrack.repository.CommandeRepository;
 import org.laicose.logitrack.repository.LigneCommandeRepository;
 import org.laicose.logitrack.repository.ProduitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,6 +65,15 @@ public class LigneCommandeService {
         produitRepository.save(produit);
 
         ligneCommandeRepository.delete(ligne);
+    }
+
+    public Double totalImpaye(long id){
+        return ligneCommandeRepository.totalImpaye(id);
+    }
+
+    public Page<LigneCommandeResDto> getAllLigneCommande(long id, Pageable pageable){
+        Page<LigneCommande> commandes = ligneCommandeRepository.getallCommande(id,pageable);
+        return commandes.map(ligneCommandeMapper::toResponseDto);
     }
 
 

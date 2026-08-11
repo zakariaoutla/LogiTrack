@@ -12,8 +12,8 @@ public class LigneCommandeReqDto {
     @Positive(message = "La quantité doit être supérieure à zéro")
     private int quantite;
     @NotNull(message = "Commande est obligatoire")
-    private long commandeId;
+    private Long commandeId;
     @NotNull(message = "Produit est obligatoire")
-    private long produitId;
+    private Long produitId;
 
 }

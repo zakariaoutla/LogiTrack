@@ -7,6 +7,8 @@ import org.laicose.logitrack.mapper.ProduitMapper;
 import org.laicose.logitrack.model.Produit;
 import org.laicose.logitrack.repository.ProduitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,9 +21,9 @@ public class ProduitService {
     private final ProduitMapper produitMapper;
 
 
-    public List<ProduitResDto> getAllProduits() {
-        List<Produit> produits = produitRepository.findAll();
-        return produitMapper.toListDto(produits);
+    public Page<ProduitResDto> getAllProduits(Pageable pageable) {
+        Page<Produit> produits = produitRepository.findAll(pageable);
+        return produits.map(produitMapper::toResponse);
     }
 
     public ProduitResDto getById(long id) {

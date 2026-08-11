@@ -15,4 +15,5 @@ public class CommandeResDto implements Serializable {
     private LocalDate dateCommande;
     private CommandeStatut commandeStatut;
     private long clientId;
+    private String clientNom;
 }

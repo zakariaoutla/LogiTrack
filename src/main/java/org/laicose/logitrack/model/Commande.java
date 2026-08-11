@@ -28,7 +28,7 @@ public class Commande {
 
 
     @JsonIgnore
-    @OneToMany(mappedBy = "commande")
+    @OneToMany(mappedBy = "commande",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LigneCommande> ligneCommandes;
 
     @ManyToOne

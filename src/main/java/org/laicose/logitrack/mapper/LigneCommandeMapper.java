@@ -20,5 +20,9 @@ public interface LigneCommandeMapper {
 
     @Mapping(source = "commande.id", target = "commandeId")
     @Mapping(source = "produit.id", target = "produitId")
+    @Mapping(source = "produit.prix",target = "montantTotal")
+    @Mapping(source = "produit.nom", target = "produitNom")
+    @Mapping(source = "commande.dateCommande", target = "dateCommande")
+    @Mapping(source = "commande.commandeStatut", target = "commandeStatut")
     LigneCommandeResDto toResponseDto(LigneCommande ligneCommande);
 }
