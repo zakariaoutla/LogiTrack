@@ -21,4 +21,7 @@ public interface CommandeRepository extends JpaRepository<Commande, Long> {
 
     long countByCommandeStatut(CommandeStatut statut);
 
+    Page<Commande> findByClientId(Long clientId, Pageable pageable);
+    Page<Commande> findByStatut(CommandeStatut statut, Pageable pageable);
+
 }

@@ -1,6 +1,8 @@
 package org.laicose.logitrack.repository;
 
 import org.laicose.logitrack.model.Produit;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,5 +23,8 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
 
     @Query("select p FROM Produit p WHERE p.nom = :nom ")
     Produit findByNom(String nom);
+
+    Page<Produit> findByCategorieIgnoreCase(String categorie, Pageable pageable);
+    Page<Produit> findByPrixBetween(Double min, Double max, Pageable pageable);
 
 }
